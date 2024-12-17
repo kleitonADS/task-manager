@@ -1,59 +1,70 @@
-# TaskManager
+# Task Manager - Frontend ANGULAR
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.5.
+<img src="https://github.com/kleitonADS/task-manager-backend/blob/main/cover.png"  width="800px" alt="Screenshot Profile" />
 
-## Development server
 
-To start a local development server, run:
+Este é o frontend para o projeto de gerenciamento de tarefas. Ele permite aos usuários adicionar, editar, listar, marcar como concluídas e excluir tarefas. O frontend foi desenvolvido utilizando **Angular 17+**.
 
+## Tecnologias
+
+- **Frontend:** Angular 17+
+- **Servidor de Desenvolvimento:** Angular CLI
+- **API:** Laravel (Backend)
+
+## Requisitos
+
+- **Node.js** (recomendado a versão LTS)
+- **Angular CLI** (instalado globalmente)
+
+## Como Rodar o Projeto
+
+### 1. Clonar o Repositório
+
+Clone este repositório para sua máquina local:
+
+```bash
+git clone https://github.com/kleitonADS/task-manager.git
+cd task-manager
+```
+
+
+
+# Instalar Dependências:
+```bash
+npm install
+
+```
+
+---
+
+# Rodar o Servidor de Desenvolvimento
 ```bash
 ng serve
+
+
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+# Isso irá iniciar o servidor no endereço http://localhost:4200. A página será recarregada automaticamente sempre que você fizer alterações no código.
 ```bash
-ng generate component component-name
+http://localhost:4200
+
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
+# Conectar com o Backend
+Certifique-se de que o backend (Laravel) está rodando e configurado corretamente para se comunicar com o frontend. A URL da API deve estar configurada no frontend (por exemplo, em src/environments/environment.ts), geralmente em algo como:
 ```bash
-ng generate --help
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8000/api' // URL da API do Laravel
+};
+
+
 ```
 
-## Building
+---
 
-To build the project run:
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
