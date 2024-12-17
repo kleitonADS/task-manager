@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Lista de Tarefas</h1>
+    <button class="btn btn-primary" (click)="showTaskForm()">
+      <i class="bi bi-plus-lg"></i> Nova Tarefa
+    </button>
+  </div>
+
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+  <ng-container *ngIf="!isLoading">
+    <app-empty-state
+      *ngIf="tasks.length === 0"
+      message="Nenhuma tarefa encontrada"
+      description="Clique no botão 'Nova Tarefa' para começar"
+    ></app-empty-state>
+
+    <div class="list-group" *ngIf="tasks.length > 0">
+      <app-task-item
+        *ngFor="let task of tasks"
+        [task]="task"
+        (statusToggle)="toggleStatus($event)"
+        (edit)="editTask($event)"
+        (delete)="deleteTask($event)"
+      ></app-task-item>
+    </div>
+  </ng-container>
+
+  <app-modal *ngIf="showForm">
+    <app-task-form
+      [task]="selectedTask"
+      (save)="saveTask($event)"
+      (cancel)="hideTaskForm()"
+    ></app-task-form>
+  </app-modal>
+</div>

@@ -27,7 +27,7 @@
               }
             ],
            "styles": [
-  "src/styles.css",
+  "src/global_styles.css",
   "node_modules/bootstrap/dist/css/bootstrap.min.css"
 ],
             "scripts": []
@@ -86,7 +86,7 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "global_styles.css"
             ],
             "scripts": []
           }

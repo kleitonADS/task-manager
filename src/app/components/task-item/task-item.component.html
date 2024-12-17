@@ -1,0 +1,27 @@
+<div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+  <div [class.task-completed]="task.status === 'concluido'">
+    <h5 class="mb-1">{{ task.titulo }}</h5>
+    <p class="mb-1 text-muted" *ngIf="task.descricao">{{ task.descricao }}</p>
+    <small class="text-muted">
+      Criado em: {{ formatTaskDate(task.created_at) }}
+      <span *ngIf="task.updated_at !== task.created_at">
+        • Atualizado em: {{ formatTaskDate(task.updated_at) }}
+      </span>
+    </small>
+  </div>
+  <div class="btn-group">
+    <button
+      class="btn btn-outline-success btn-sm"
+      (click)="onStatusToggle()"
+      [title]="task.status === 'concluido' ? 'Marcar como pendente' : 'Marcar como concluída'"
+    >
+      <i class="bi" [class.bi-check-circle]="task.status === 'concluido'" [class.bi-circle]="task.status === 'pendente'"></i>
+    </button>
+    <button class="btn btn-outline-primary btn-sm" (click)="onEdit()" title="Editar">
+      <i class="bi bi-pencil"></i>
+    </button>
+    <button class="btn btn-outline-danger btn-sm" (click)="onDelete()" title="Excluir">
+      <i class="bi bi-trash"></i>
+    </button>
+  </div>
+</div>

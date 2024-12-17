@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ task.id ? 'Editar Tarefa' : 'Nova Tarefa' }}</h5>
+  <button type="button" class="btn-close" (click)="onCancel()"></button>
+</div>
+<div class="modal-body">
+  <form #taskForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="titulo" class="form-label">Título*</label>
+      <input
+        type="text"
+        class="form-control"
+        id="titulo"
+        name="titulo"
+        [(ngModel)]="task.titulo"
+        required
+        #titulo="ngModel"
+      >
+      <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="text-danger">
+        <small *ngIf="titulo.errors?.['required']">Título é obrigatório</small>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
+      <textarea
+        class="form-control"
+        id="descricao"
+        name="descricao"
+        [(ngModel)]="task.descricao"
+        rows="3"
+      ></textarea>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">
+        {{ task.id ? 'Atualizar' : 'Criar' }}
+      </button>
+    </div>
+  </form>
+</div>
