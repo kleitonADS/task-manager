@@ -1,6 +1,6 @@
 # Task Manager - Frontend ANGULAR
 
-<img src="https://github.com/kleitonADS/task-manager-backend/blob/main/cover.png"  width="800px" alt="Screenshot Profile" />
+<img src="https://github.com/kleitonADS/task-manager/blob/main/coverf.png"  width="800px" alt="Screenshot Profile" />
 
 
 Este é o frontend para o projeto de gerenciamento de tarefas. Ele permite aos usuários adicionar, editar, listar, marcar como concluídas e excluir tarefas. O frontend foi desenvolvido utilizando **Angular 17+**.
