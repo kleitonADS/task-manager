@@ -45,7 +45,8 @@ export class TaskListComponent implements OnInit {
         this.tasks = tasks;
         this.isLoading = false;
       },
-      error: () => {
+      error: (err) => {
+        console.error('Erro ao carregar tarefas:', err);
         this.isLoading = false;
       }
     });
@@ -65,10 +66,24 @@ export class TaskListComponent implements OnInit {
     this.showForm = true;
   }
 
+
+
   saveTask(task: Task) {
+    if (!task.titulo || !task.status) {
+      console.error('Campos obrigatórios faltando:', task);
+      return;
+    }
+
+    const taskData: Task = {
+      ...task,
+      titulo: task.titulo.trim(),
+      descricao: task.descricao?.trim() || '',
+      status: task.status || 'pendente'
+    };
+
     const operation = task.id
-      ? this.taskService.updateTask(task.id, task)
-      : this.taskService.createTask(task);
+      ? this.taskService.updateTask(task.id, taskData)
+      : this.taskService.createTask(taskData);
 
     operation.subscribe({
       next: () => {
@@ -77,9 +92,21 @@ export class TaskListComponent implements OnInit {
         this.notificationService.showSuccess(
           task.id ? MESSAGES.TASK.UPDATE_SUCCESS : MESSAGES.TASK.CREATE_SUCCESS
         );
+      },
+      error: (err) => {
+        console.error('Erro ao salvar/atualizar tarefa:', err);
+
+
+        if (err.status === 422) {
+          console.error('Erro 422: Dados inválidos.', err.error);
+          this.notificationService.showError('Erro ao atualizar status. Dados inválidos.');
+        } else {
+          console.error('Erro desconhecido:', err);
+        }
       }
     });
   }
+
 
   deleteTask(task: Task) {
     if (task.id && this.notificationService.showConfirmation(MESSAGES.TASK.DELETE_CONFIRM)) {
@@ -87,6 +114,9 @@ export class TaskListComponent implements OnInit {
         next: () => {
           this.loadTasks();
           this.notificationService.showSuccess(MESSAGES.TASK.DELETE_SUCCESS);
+        },
+        error: (err) => {
+          console.error('Erro ao deletar tarefa:', err);
         }
       });
     }
@@ -100,14 +130,38 @@ export class TaskListComponent implements OnInit {
         status: newStatus
       };
 
+      console.log('Alterando status da tarefa:', updatedTask);
+
       this.taskService.updateTask(task.id, updatedTask).subscribe({
-        next: () => {
+        next: (response) => {
+          console.log('Resposta da atualização do status:', response);
           this.loadTasks();
           this.notificationService.showSuccess(
             newStatus === 'concluido' ? MESSAGES.TASK.MARK_COMPLETED : MESSAGES.TASK.MARK_PENDING
           );
+        },
+        error: (err) => {
+          console.error('Erro ao alterar status da tarefa:', err);
+          if (err.status === 422) {
+            console.error('Erro 422: Dados inválidos.', err.error);
+            this.notificationService.showError('Erro ao atualizar status. Dados inválidos.');
+          } else {
+            console.error('Erro desconhecido:', err);
+            this.notificationService.showError('Erro desconhecido. Tente novamente mais tarde.');
+          }
+
+          if (err.error) {
+            console.log('Detalhes do erro:', err.error);
+          }
         }
       });
+    } else {
+      console.error('Tarefa sem ID, não é possível atualizar o status.');
     }
   }
+
+
+
+
+
 }

@@ -1,5 +1,6 @@
 export type TaskStatus = 'pendente' | 'concluido';
 
+
 export interface Task {
   id?: number;
   titulo: string;

@@ -1,7 +1,7 @@
 import { Task, TaskStatus } from '../models/task.model';
 
 export function getTaskStatusLabel(status: TaskStatus): string {
-  return status === 'concluido' ? 'Concluída' : 'Pendente';
+  return status === 'concluido' ? 'Concluida' : 'Pendente';
 }
 
 export function formatTaskDate(dateString?: string): string {

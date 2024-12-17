@@ -17,11 +17,16 @@ export class TaskService {
     private errorHandler: ErrorHandlerService
   ) {}
 
-  getTasks(): Observable<Task[]> {
-    return this.http.get<ApiResponse<Task[]>>(this.apiUrl).pipe(
-      map(response => response.data),
+
+  getTasks(): Observable<any> {
+    return this.http.get(this.apiUrl).pipe(
+      map(response => {
+        console.log('Resposta completa:', response);
+        return response;
+
+      }),
       catchError(error => {
-        this.errorHandler.handleError(error);
+        console.error('Erro na requisição:', error);
         throw error;
       })
     );
@@ -42,6 +47,10 @@ export class TaskService {
       map(response => response.data),
       catchError(error => {
         this.errorHandler.handleError(error);
+        if (error.status === 422) {
+          console.error('Erro de validação:', error.error);
+          throw new Error('Erro de validação ao criar tarefa.');
+        }
         throw error;
       })
     );
@@ -52,8 +61,11 @@ export class TaskService {
       map(response => response.data),
       catchError(error => {
         this.errorHandler.handleError(error);
-        throw error;
-      })
+        if (error.status === 422) {
+          console.error('Erro de validação:', error.error);
+          throw new Error('Erro de validação ao atualizar tarefa.');
+        }
+        throw error;        })
     );
   }
 
